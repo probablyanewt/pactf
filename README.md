@@ -13,7 +13,7 @@ Probably a C testing framework
 
 ## How it works
 
-The long and sort of it is the `PACTF_SUITE` macro adds a main function to a C library, enabling you to run it as a binary. This does mean that you can't use pactf in a file with a main function already. If you have code in a main function you want to test, then you'll have to pull it out into a library first.
+The long and short of it is the `PACTF_SUITE` macro adds a main function to a C library, enabling you to run it as a binary. This does mean that you can't use pactf in a file with a main function already. If you have code in a main function you want to test, then you'll have to pull it out into a library first.
 
 ## Install
 
