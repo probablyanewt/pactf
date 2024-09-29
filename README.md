@@ -132,6 +132,8 @@ gcc -DPACTF_ENABLE -o test lib.c
 
 You may also need to add include flags to gcc if you're using header files from non standard places.
 
+If any tests fail they will be reported in stdout and the main function will return with an exit code of 1.
+
 ## Possible future improvements
 
 - I may extend this to be able to run integration tests against complete compiled binaries, however, that may end up being a separate project.

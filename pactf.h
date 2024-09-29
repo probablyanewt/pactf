@@ -34,9 +34,11 @@
 // Helpers
 #define P_FUNCTION(name, fn_body)                                              \
   {                                                                            \
-    char pactf_fn_name[PACTF_STR_BUF_LEN] = name;                              \
     char pactf_test_prefix[PACTF_PREFIX_BUF_LEN] = "- ";                       \
+    (void)pactf_test_prefix;                                                   \
     char pactf_assert_prefix[PACTF_PREFIX_BUF_LEN] = "    ";                   \
+    (void)pactf_assert_prefix;                                                 \
+                                                                               \
     P_LOG("\n%s\n", name);                                                     \
     { fn_body }                                                                \
   }
@@ -68,8 +70,6 @@
   void pactf_after_each() __attribute__((weak));                               \
                                                                                \
   int main() {                                                                 \
-    char pactf_fn_name[PACTF_STR_BUF_LEN] = "";                                \
-    (void)pactf_fn_name;                                                       \
     char pactf_empty_fn_name[PACTF_STR_BUF_LEN] = "";                          \
     (void)pactf_empty_fn_name;                                                 \
     char pactf_test_prefix[PACTF_PREFIX_BUF_LEN] = "";                         \
