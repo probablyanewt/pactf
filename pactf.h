@@ -7,7 +7,7 @@
 
 // Constants
 #define PACTF_STR_BUF_LEN 50
-#define PACTF_PREFIX_BUF_LEN 4
+#define PACTF_PREFIX_BUF_LEN 10
 #define P_STRINGIFY(x) #x
 
 // Loggers
@@ -35,7 +35,7 @@
   }
 
 // Helpers
-#define P_FUNCTION(name, fn_body)                                              \
+#define P_FUNCTION(name, __VA_ARGS__)                                          \
   {                                                                            \
     char pactf_test_prefix[PACTF_PREFIX_BUF_LEN] = "- ";                       \
     (void)pactf_test_prefix;                                                   \
@@ -43,32 +43,32 @@
     (void)pactf_assert_prefix;                                                 \
                                                                                \
     P_LOG("\n%s\n", name);                                                     \
-    { fn_body }                                                                \
+    { __VA_ARGS__ }                                                            \
   }
 
-#define P_TEST(name, test_body)                                                \
+#define P_TEST(name, ...)                                                      \
   P_LOG("%s%s\n", pactf_test_prefix, name);                                    \
   if (pactf_before_each) {                                                     \
     pactf_before_each();                                                       \
   }                                                                            \
-  { test_body }                                                                \
+  { __VA_ARGS__ }                                                              \
   if (pactf_after_each) {                                                      \
     pactf_after_each();                                                        \
   }
 
-#define P_BEFORE_EACH(before_each_body)                                        \
-  void pactf_before_each() { before_each_body }
+#define P_BEFORE_EACH(...)                                                     \
+  void pactf_before_each() { __VA_ARGS__ }
 
-#define P_AFTER_EACH(after_each_body)                                          \
-  void pactf_after_each() { after_each_body }
+#define P_AFTER_EACH(...)                                                      \
+  void pactf_after_each() { __VA_ARGS__ }
 
 // Core
-#define PACTF_SETUP(setup_body)                                                \
+#define PACTF_SETUP(...)                                                       \
   void pactf_before_each() __attribute__((weak));                              \
   void pactf_after_each() __attribute__((weak));                               \
-  setup_body
+  __VA_ARGS__
 
-#define PACTF_SUITE(tests_body)                                                \
+#define PACTF_SUITE(...)                                                       \
   void pactf_before_each() __attribute__((weak));                              \
   void pactf_after_each() __attribute__((weak));                               \
                                                                                \
@@ -81,7 +81,7 @@
     (void)pactf_assert_prefix;                                                 \
     int pactf_errors = 0;                                                      \
                                                                                \
-    { tests_body }                                                             \
+    { __VA_ARGS__ }                                                            \
                                                                                \
     if (pactf_errors > 0) {                                                    \
       return 1;                                                                \
