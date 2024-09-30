@@ -8,6 +8,7 @@
 // Constants
 #define PACTF_STR_BUF_LEN 50
 #define PACTF_PREFIX_BUF_LEN 4
+#define P_STRINGIFY(x) #x
 
 // Loggers
 #define P_LOG(...) printf(__VA_ARGS__);
@@ -27,7 +28,8 @@
       P_LOG_GREEN("%sPass\n", pactf_assert_prefix)                             \
     } else {                                                                   \
       P_LOG_RED("%sFail\n", pactf_assert_prefix)                               \
-      P_LOG_RED("%s%s evaluates to false\n", pactf_assert_prefix, __VA_ARGS__) \
+      P_LOG_RED("%s%s evaluates to false\n", pactf_assert_prefix,              \
+                P_STRINGIFY(__VA_ARGS__));                                     \
       pactf_errors++;                                                          \
     }                                                                          \
   }

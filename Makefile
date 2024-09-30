@@ -1,3 +1,5 @@
+EXAMPLEDIRS:= $(wildcard ./examples/*)
+
 install: uninstall
 	cp ./pactf.h /usr/include/pactf.h
 
@@ -9,3 +11,10 @@ uninstall:
 
 run_all_examples:
 	./scripts/run_all_examples.sh
+
+test: $(EXAMPLEDIRS)
+$(EXAMPLEDIRS):
+	$(MAKE) run_tests --no-print-directory -C $@
+
+.PHONY: test $(EXAMPLEDIRS)
+.SILENT: test $(EXAMPLEDIRS)

@@ -1,0 +1,29 @@
+name: PR checks
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  get-examples:
+    runs-on: ubuntu-latest
+    outputs:
+      examples: ${{ steps.examples.outputs.examples }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Define examples
+        id: examples
+        run: echo "examples=$(ls | jq -R -s -c 'split("\n")[:-1]')" >> "$GITHUB_OUTPUT"
+        working-directory: examples
+
+  run-examples:
+    needs: get-examples
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        example: ${{ fromJSON(needs.get-examples.outputs.examples) }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: make run_tests
+        working-directory: examples/${{ matrix.example }}

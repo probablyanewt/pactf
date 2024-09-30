@@ -2,7 +2,7 @@
 
 run_example () {
   cd $1
-  make run_tests
+  make --no-print-directory run_tests
   cd ..
 }
 
