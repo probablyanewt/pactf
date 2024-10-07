@@ -12,6 +12,12 @@
 
 // Loggers
 #define P_LOG(...) printf(__VA_ARGS__);
+#define P_LOG_BOLD(...)                                                        \
+  {                                                                            \
+    char buf[PACTF_STR_BUF_LEN];                                               \
+    sprintf(buf, __VA_ARGS__);                                                 \
+    P_LOG("%s%s%s", "\033[1m", buf, "\033[0m");                                \
+  }
 #define P_LOG_COLOUR(colour, ...)                                              \
   {                                                                            \
     char buf[PACTF_STR_BUF_LEN];                                               \
@@ -42,7 +48,7 @@
     char pactf_assert_prefix[PACTF_PREFIX_BUF_LEN] = "    ";                   \
     (void)pactf_assert_prefix;                                                 \
                                                                                \
-    P_LOG("\n%s\n", name);                                                     \
+    P_LOG_BOLD("\n# %s\n", name);                                               \
     { __VA_ARGS__ }                                                            \
   }
 

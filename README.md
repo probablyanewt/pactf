@@ -117,6 +117,7 @@ All code arguments support optionally wrapping your code in a block, unless othe
 | Macro                           | Explanation                                                                                                                                 |
 | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `P_LOG(...args)`                | `P_LOG` is simply a macro helper for `printf` and takes the same `args`.                                                                    |
+| `P_LOG_BOLD(...args)`           | `P_LOG_BOLD` is a macro helper for `printf` and takes the same `args`, but wraps the resultant string in the bold ansi code.                |
 | `P_LOG_COLOUR(colour, ...args)` | `P_LOG_COLOUR` is a macro helper for `printf` and takes the same `args`, but wraps the resultant string in the provided ansi `colour` code. |
 | `P_LOG_GREEN(colour, ...args)`  | `P_LOG_RED` is macro for `P_LOG_COLOUR` with the colour hardcoded as green, `"\033[32m"`.                                                   |
 | `P_LOG_RED(colour, ...args)`    | `P_LOG_RED` is macro for `P_LOG_COLOUR` with the colour hardcoded as red, `"\033[31m"`.                                                     |
@@ -138,7 +139,9 @@ gcc -DPACTF_ENABLE -o test lib.c
 
 You may also need to add include flags to gcc if you're using header files from non standard places.
 
-If any tests fail they will be reported in stdout and the main function will return with an exit code of 1. There are a couple of options for running all of the binaries. The `run_all_examples` recipe in the makefile runs all the test binaries regardless if any fail but can make it hard to spot failures, the `test` recipe however errors immediately when any fail, and finally the matrix strategy used in `.github/workflows/pr.yml` runs all of the binaries in parallel making it really obvious which one failed, whilst also running all of them regardless of failures. This gives you a lot of freedom in how you want to run these tests in different situations.
+If any tests fail they will be reported in stdout and the main function will return with an exit code of 1.
+
+There are a couple of options for running all of the binaries. The `run_all_examples` recipe in the makefile runs all the test binaries regardless if any fail but can make it hard to spot failures, the `test` recipe however errors immediately when any fail, and finally the matrix strategy used in `.github/workflows/pr.yml` runs all of the binaries in parallel making it really obvious which one failed, whilst also running all of them regardless of failures. This gives you a lot of freedom in how you want to run these tests in different situations.
 
 ## Possible future improvements
 
