@@ -9,9 +9,6 @@ link: uninstall
 uninstall:
 	rm -f /usr/include/pactf.h
 
-run_all_examples:
-	./scripts/run_all_examples.sh
-
 test: $(EXAMPLEDIRS)
 $(EXAMPLEDIRS):
 	$(MAKE) run_tests --no-print-directory -C $@

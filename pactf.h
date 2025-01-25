@@ -36,30 +36,21 @@
       P_LOG_RED("%sFail\n", pactf_assert_prefix)                               \
       P_LOG_RED("%s%s evaluates to false\n", pactf_assert_prefix,              \
                 P_STRINGIFY(__VA_ARGS__));                                     \
+      pactf_test_failure = 1;                                                  \
       pactf_errors++;                                                          \
     }                                                                          \
   }
 
 // Helpers
-#define P_FUNCTION(name, __VA_ARGS__)                                          \
+#define P_FUNCTION(name, ...)                                                  \
   {                                                                            \
     char pactf_test_prefix[PACTF_PREFIX_BUF_LEN] = "- ";                       \
     (void)pactf_test_prefix;                                                   \
     char pactf_assert_prefix[PACTF_PREFIX_BUF_LEN] = "    ";                   \
     (void)pactf_assert_prefix;                                                 \
                                                                                \
-    P_LOG_BOLD("\n# %s\n", name);                                               \
+    P_LOG_BOLD("\n# %s\n", name);                                              \
     { __VA_ARGS__ }                                                            \
-  }
-
-#define P_TEST(name, ...)                                                      \
-  P_LOG("%s%s\n", pactf_test_prefix, name);                                    \
-  if (pactf_before_each) {                                                     \
-    pactf_before_each();                                                       \
-  }                                                                            \
-  { __VA_ARGS__ }                                                              \
-  if (pactf_after_each) {                                                      \
-    pactf_after_each();                                                        \
   }
 
 #define P_BEFORE_EACH(...)                                                     \
@@ -68,7 +59,27 @@
 #define P_AFTER_EACH(...)                                                      \
   void pactf_after_each() { __VA_ARGS__ }
 
+#define P_AFTER_FAILURE(...)                                                   \
+  {                                                                            \
+    if (pactf_test_failure) {                                                  \
+      { __VA_ARGS__ }                                                          \
+    }                                                                          \
+  }
+
 // Core
+#define P_TEST(name, ...)                                                      \
+  {                                                                            \
+    int pactf_test_failure = 0;                                                \
+    P_LOG("%s%s\n", pactf_test_prefix, name);                                  \
+    if (pactf_before_each) {                                                   \
+      pactf_before_each();                                                     \
+    }                                                                          \
+    { __VA_ARGS__ }                                                            \
+    if (pactf_after_each) {                                                    \
+      pactf_after_each();                                                      \
+    }                                                                          \
+  }
+
 #define PACTF_SETUP(...)                                                       \
   void pactf_before_each() __attribute__((weak));                              \
   void pactf_after_each() __attribute__((weak));                               \
